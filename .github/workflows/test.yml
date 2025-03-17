@@ -27,6 +27,9 @@ jobs:
       - name: Ensure browsers are installed
         run: python -m playwright install --with-deps
 
+      - name: Ensure report directory exists
+        run: mkdir -p playwright-report
+
       - name: Start HTTP server
         run: |
           cd tests
@@ -34,7 +37,7 @@ jobs:
           cd ..
 
       - name: Run tests
-        run: pytest -v
+        run: pytest --html=playwright-report/report.html --self-contained-html -v
 
       - name: Upload Playwright report
         if: always()
