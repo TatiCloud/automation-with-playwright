@@ -30,6 +30,8 @@ jobs:
       - name: Run tests
         run: |
           cd tests
+          python -m http.server 8000
+          cd ..
           pytest -v
 
       - name: Upload Playwright report
