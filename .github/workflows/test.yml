@@ -27,16 +27,18 @@ jobs:
       - name: Ensure browsers are installed
         run: python -m playwright install --with-deps
 
-      - name: Run tests
+      - name: Start HTTP server
         run: |
           cd tests
-          python -m http.server 8000
+          python -m http.server 8000 &  # Run in background
           cd ..
-          pytest -v
+
+      - name: Run tests
+        run: pytest -v
 
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
